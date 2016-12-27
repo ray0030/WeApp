@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.qq.weixin.mp.aes.AesException;
 import com.qq.weixin.mp.aes.WXBizMsgCrypt;
+import com.util.WeiXinCheckUtil;
 
 @Controller
 public class CheckLinkServlet{
@@ -30,7 +31,7 @@ public class CheckLinkServlet{
 	private static final long serialVersionUID = 1L;
 	
     private String token = "mxcweixin";  
-    private String encodingAESKey = "s8vFF4f6AWay3uAdJh79WD6imaam4BV6Kl4eL4UzgfM";  
+    private String encodingAESKey = "OnVWt2l3HjpnVyVerEbgPKxw04pC7tupzcHVDywHmVa";  
     private String corpId = "mxc";
 
 	public CheckLinkServlet() {
@@ -44,7 +45,7 @@ public class CheckLinkServlet{
 		String timestamp = req.getParameter("timestamp");
 		String nonce = req.getParameter("nonce");
 		String echoStr = req.getParameter("echostr"); 
-		ArrayList<String> list = new ArrayList<String>();
+		/*ArrayList<String> list = new ArrayList<String>();
 		list.add(nonce);
 		list.add(timestamp);
 		list.add(token);
@@ -63,7 +64,13 @@ public class CheckLinkServlet{
         }  
         out.print(result);  
         out.close();  
-        out = null; 
+        out = null; */
+		PrintWriter out = resp.getWriter();
+		if(WeiXinCheckUtil.checkSignature(signature, timestamp, nonce)){
+            out.print(echoStr);
+        }else{
+        	
+        }
 	}
 
 
