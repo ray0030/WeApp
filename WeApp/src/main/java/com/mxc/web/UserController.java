@@ -20,7 +20,7 @@ public class UserController {
 	private UserService userService; 
 	
 	/*
-	 * ²âÊÔÊı¾İ¿âÁ¬½Ó
+	 * æµ‹è¯•æ•°æ®åº“è¿æ¥
 	 * */
 	@RequestMapping(value="/showAll")
 	public void showAll(HttpServletRequest resq,HttpServletResponse resp){
