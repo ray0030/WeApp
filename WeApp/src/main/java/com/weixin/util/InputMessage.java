@@ -5,11 +5,11 @@ import java.io.Serializable;
 import com.thoughtworks.xstream.annotations.XStreamAlias;  
   
 /** 
- * POSTµÄXMLÊı¾İ°ü×ª»»ÎªÏûÏ¢½ÓÊÜ¶ÔÏó 
+ * POSTçš„XMLæ•°æ®åŒ…è½¬æ¢ä¸ºæ¶ˆæ¯æ¥å—å¯¹è±¡ 
  *  
  * <p> 
- * ÓÉÓÚPOSTµÄÊÇXMLÊı¾İ°ü£¬ËùÒÔ²»È·¶¨ÎªÄÄÖÖ½ÓÊÜÏûÏ¢£¬<br/> 
- * ËùÒÔÖ±½Ó½«ËùÓĞ×Ö¶Î¶¼½øĞĞ×ª»»£¬×îºó¸ù¾İ<tt>MsgType</tt>×Ö¶ÎÀ´ÅĞ¶ÏÈ¡ºÎÖÖÊı¾İ 
+ * ç”±äºPOSTçš„æ˜¯XMLæ•°æ®åŒ…ï¼Œæ‰€ä»¥ä¸ç¡®å®šä¸ºå“ªç§æ¥å—æ¶ˆæ¯ï¼Œ<br/> 
+ * æ‰€ä»¥ç›´æ¥å°†æ‰€æœ‰å­—æ®µéƒ½è¿›è¡Œè½¬æ¢ï¼Œæœ€åæ ¹æ®<tt>MsgType</tt>å­—æ®µæ¥åˆ¤æ–­å–ä½•ç§æ•°æ® 
  * </p> 
  *  
  */  
@@ -30,13 +30,13 @@ public class InputMessage implements Serializable {
     private String MsgType = "text";  
     @XStreamAlias("MsgId")  
     private Long MsgId;  
-    // ÎÄ±¾ÏûÏ¢  
+    // æ–‡æœ¬æ¶ˆæ¯  
     @XStreamAlias("Content")  
     private String Content;  
-    // Í¼Æ¬ÏûÏ¢  
+    // å›¾ç‰‡æ¶ˆæ¯  
     @XStreamAlias("PicUrl")  
     private String PicUrl;  
-    // Î»ÖÃÏûÏ¢  
+    // ä½ç½®æ¶ˆæ¯  
     @XStreamAlias("LocationX")  
     private String LocationX;  
     @XStreamAlias("LocationY")  
@@ -45,21 +45,21 @@ public class InputMessage implements Serializable {
     private Long Scale;  
     @XStreamAlias("Label")  
     private String Label;  
-    // Á´½ÓÏûÏ¢  
+    // é“¾æ¥æ¶ˆæ¯  
     @XStreamAlias("Title")  
     private String Title;  
     @XStreamAlias("Description")  
     private String Description;  
     @XStreamAlias("Url")  
     private String URL;  
-    // ÓïÒôĞÅÏ¢  
+    // è¯­éŸ³ä¿¡æ¯  
     @XStreamAlias("MediaId")  
     private String MediaId;  
     @XStreamAlias("Format")  
     private String Format;  
     @XStreamAlias("Recognition")  
     private String Recognition;  
-    // ÊÂ¼ş  
+    // äº‹ä»¶  
     @XStreamAlias("Event")  
     private String Event;  
     @XStreamAlias("EventKey")  

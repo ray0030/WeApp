@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * ËùÓĞ¿ØÖÆÆ÷µÄ»ùÀà
+ * æ‰€æœ‰æ§åˆ¶å™¨çš„åŸºç±»
  *
  */
 public class BaseController {
@@ -25,20 +25,20 @@ public class BaseController {
 	protected Logger _logger = LoggerFactory.getLogger(this.getClass());
 	
 	/**
-     * Êä³öjson½á¹û
+     * è¾“å‡ºjsonç»“æœ
      *
      * @param response
      * @param context
      * @throws Exception
      */
-    protected void writeJson(HttpServletResponse response, String context)
+    public void writeJson(HttpServletResponse response, String context)
             throws Exception {
-        _logger.info("ÏìÓ¦json±¨ÎÄ£º"+context);
+        _logger.info("å“åº”jsonæŠ¥æ–‡ï¼š"+context);
         ResponseUtil.outJson(context, response);
     }
     
     /**
-     * ½ÓÊÕrequestÁ÷×ª³ÉJSON¶ÔÏó
+     * æ¥æ”¶requestæµè½¬æˆJSONå¯¹è±¡
      * @param request
      * @return
      * @throws IOException
@@ -49,7 +49,7 @@ public class BaseController {
     }
     
     /**
-     * ½ÓÊÕrequestÁ÷×ª³É¶ÔÏó
+     * æ¥æ”¶requestæµè½¬æˆå¯¹è±¡
      * @param request
      * @param type
      * @param <T>
@@ -63,7 +63,7 @@ public class BaseController {
     
 
     /**
-     * ÅĞ¶ÏObjectÊı¾İ
+     * åˆ¤æ–­Objectæ•°æ®
      */
     protected String checkObject(Object object) {
         if (object == null) {

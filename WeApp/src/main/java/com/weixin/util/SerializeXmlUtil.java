@@ -11,10 +11,10 @@ import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.XppDriver;  
   
 /** 
- * xml ×ª»»¹¤¾ßÀà 
+ * xml è½¬æ¢å·¥å…·ç±» 
  *  
  * @author morning 
- * @date 2015Äê2ÔÂ16ÈÕ ÏÂÎç2:42:50 
+ * @date 2015å¹´2æœˆ16æ—¥ ä¸‹åˆ2:42:50 
  */  
 public class SerializeXmlUtil {  
   
@@ -29,7 +29,7 @@ public class SerializeXmlUtil {
                     @Override  
                     public void startNode(String name, @SuppressWarnings("rawtypes") Class clazz) {  
                         super.startNode(name, clazz);  
-                        // ÒµÎñ´¦Àí£¬¶ÔÓÚÓÃXStreamCDATA±ê¼ÇµÄField£¬ĞèÒª¼ÓÉÏCDATA±êÇ©  
+                        // ä¸šåŠ¡å¤„ç†ï¼Œå¯¹äºç”¨XStreamCDATAæ ‡è®°çš„Fieldï¼Œéœ€è¦åŠ ä¸ŠCDATAæ ‡ç­¾  
                         if (!name.equals("xml")) {  
                             cdata = needCDATA(targetClass, name);  
                         } else {  
@@ -71,7 +71,7 @@ public class SerializeXmlUtil {
   
     private static boolean existsCDATA(Class<?> clazz, String fieldAlias) {  
         if ("MediaId".equals(fieldAlias)) {  
-            return true; // ÌØÀıÌí¼Ó morning99  
+            return true; // ç‰¹ä¾‹æ·»åŠ  morning99  
         }  
         // scan fields  
         Field[] fields = clazz.getDeclaredFields();  

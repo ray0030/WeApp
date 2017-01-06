@@ -1,0 +1,7 @@
+.metadata/
+Servers/
+WeApp.zip
+RemoteSystemsTempFiles/.project
+WeApp/.settings/org.eclipse.core.resources.prefs
+WeApp/target/classes/.gitignore
+WeApp/target/m2e-wtp/web-resources/.gitignore
