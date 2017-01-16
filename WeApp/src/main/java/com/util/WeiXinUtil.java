@@ -21,8 +21,9 @@ public class WeiXinUtil {
     	String grant_type = GlobalPara.grant_type;
 		String appid = GlobalPara.appid;
 		String secret=GlobalPara.secret;
-		String apiUrl="https://api.weixin.qq.com/cgi-bin/token?"+"grant_type="+grant_type+"&appid="+appid+"&secret="+secret;
-		JSONObject jsonObj=HttpUtil.httpRequest(apiUrl, "get", null);
+		String token_url = GlobalPara.token_url;
+		String apiUrl=token_url+"?"+"grant_type="+grant_type+"&appid="+appid+"&secret="+secret;
+		JSONObject jsonObj=HttpUtil.httpRequest(apiUrl, "GET", null);
 		if(jsonObj != null){
 			try{
 				accessToken = new AccessToken();

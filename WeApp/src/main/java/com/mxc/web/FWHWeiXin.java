@@ -1,21 +1,41 @@
 package com.mxc.web;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.ConnectException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,7 +44,10 @@ import com.auto.util.TulingApiProcess;
 import com.common.GlobalPara;
 import com.google.gson.JsonObject;
 import com.thoughtworks.xstream.XStream;
-import com.util.WeiXinCheckUtil;
+import com.util.TokenThread;
+import com.util.WeiXinUtil;
+import com.util.bean.AccessToken;
+import com.weixin.util.HttpUtil;
 import com.weixin.util.ImageMessage;
 import com.weixin.util.InputMessage;
 import com.weixin.util.OutputMessage;
@@ -38,13 +61,15 @@ public class FWHWeiXin {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+		
+	private static Logger  log = LoggerFactory.getLogger(FWHWeiXin.class);
 	
 	public FWHWeiXin() {
 
 	}
 
 	/*
-	 * 链接个人公众号
+	 *longmel@163.com 链接个人公众号
 	 * */
 	@RequestMapping(value="/linkFuWu",method = RequestMethod.GET)
 	protected void linkGRWx(HttpServletRequest req, HttpServletResponse resp)
@@ -56,7 +81,7 @@ public class FWHWeiXin {
 			String nonce = req.getParameter("nonce");
 			String echoStr = req.getParameter("echostr"); 
 			PrintWriter out = resp.getWriter();
-			if(WeiXinCheckUtil.checkSignature(signature, timestamp, nonce)){  //校验认证
+			if(WeiXinUtil.checkSignature(signature, timestamp, nonce)){  //校验认证
 				out.print(echoStr); 
 			}else{
 	       
@@ -73,7 +98,8 @@ public class FWHWeiXin {
 		String appid = GlobalPara.appid;
 		String secret=GlobalPara.secret;
 		String apiUrl="https://api.weixin.qq.com/cgi-bin/token?"+"grant_type="+grant_type+"&appid="+appid+"&secret="+secret;
-		HttpGet request = new HttpGet(apiUrl);
+		JSONObject jsonObj=HttpUtil.httpRequest(apiUrl, "GET", null);
+		/*HttpGet request = new HttpGet(apiUrl);
 		String result="";
 		try{
 			HttpResponse response = HttpClients.createDefault()
@@ -83,9 +109,9 @@ public class FWHWeiXin {
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-		}
+		}*/
 		PrintWriter out = resp.getWriter();
-		out.print(result); 
+		out.print(jsonObj.toString()); 
 	}
 
 	
@@ -155,8 +181,44 @@ public class FWHWeiXin {
 	        Long returnTime = Calendar.getInstance().getTimeInMillis() / 1000;// 返回时间  
 	  
 	        // 取得消息类型  
-	        String msgType = inputMsg.getMsgType();  
-	        // 根据消息类型获取对应的消息内容  
+	        String msgType = inputMsg.getMsgType(); 
+	        //test测试图文消息
+	        if (msgType.equalsIgnoreCase("text")) {  
+	            // 文本消息  
+	            System.out.println("开发者微信号：" + inputMsg.getToUserName());  
+	            System.out.println("发送方帐号：" + inputMsg.getFromUserName());  
+	            System.out.println("消息创建时间：" + inputMsg.getCreateTime() + new Date(createTime * 1000l));  
+	            System.out.println("消息内容：" + inputMsg.getContent());  
+	            System.out.println("消息Id：" + inputMsg.getMsgId());  
+	            
+	            StringBuffer str = new StringBuffer();  
+	            str.append("<xml>");  
+	            str.append("<ToUserName><![CDATA[" + custermname + "]]></ToUserName>");  
+	            str.append("<FromUserName><![CDATA[" + servername + "]]></FromUserName>");  
+	            str.append("<CreateTime>" + returnTime + "</CreateTime>");  
+	            str.append("<MsgType><![CDATA[news]]></MsgType>");  
+	            str.append("<ArticleCount>2</ArticleCount>");  
+	            str.append("<Articles>"); 
+	            str.append("<item>"); 
+	            str.append("<Title><![CDATA[title1]]></Title>");
+	            str.append("<Description><![CDATA[我的测试账号1]]></Description>");
+	            str.append("<PicUrl><![CDATA[http://asset.yingmi.cn/managers/img/default.jpg]]></PicUrl>");
+	            str.append("<Url><![CDATA[http://www.baidu.com/]]></Url>");
+	            str.append("</item>"); 
+	            str.append("<item>"); 
+	            str.append("<Title><![CDATA[title2]]></Title>");
+	            str.append("<Description><![CDATA[我的测试账号2]]></Description>");
+	            str.append("<PicUrl><![CDATA[http://asset.yingmi.cn/managers/img/default.jpg]]></PicUrl>");
+	            str.append("<Url><![CDATA[http://www.sina.com.cn/]]></Url>");
+	            str.append("</item>");
+	            str.append("</Articles>");
+	            str.append("</xml>");  
+	            System.out.println(str.toString());  
+	            response.getWriter().write(str.toString());
+	            response.getWriter().write(new String(str.toString().getBytes("UTF-8"),"utf-8"));
+	        }
+	        //test end
+	       /* // 根据消息类型获取对应的消息内容  
 	        if (msgType.equalsIgnoreCase("text")) {  
 	            // 文本消息  
 	            System.out.println("开发者微信号：" + inputMsg.getToUserName());  
@@ -195,7 +257,82 @@ public class FWHWeiXin {
 	            outputMsg.setImage(images);  
 	            System.out.println("xml转换：/n" + xs.toXML(outputMsg));  
 	            response.getWriter().write(xs.toXML(outputMsg));  
-	        }  
+	        }  */
 	    }  
 	   
-}
+
+	/*
+	 * 创建图文消息模板
+	 * */
+	@RequestMapping(value="/uploadnews",method = RequestMethod.GET)
+	protected void uploadNews(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		String token = "";	
+		String apiUrl = "https://api.weixin.qq.com/cgi-bin/media/uploadnews?access_token="+TokenThread.accessToken.getToken() ;
+		String data = "{\"articles\": [{\"thumb_media_id\":\"BW4eDIdYSvO7AFjfsZKsQ9ujNma_TkCj3VSo3JNTQkYmk_iPuhpUKm48oZ4umHED\",\"author\":\"xxx\",\"title\":\"Happy Day\",\"content_source_url\":\"www.qq.com\",\"content\":\"content\",\"digest\":\"digest\",\"show_cover_pic\":\"0\"}]}";  
+        String data1 = "{\"articles\":[{\"author\":\"王传清|毕强|Wang Chuanqing|Bi Qiang\",\"content\":\"基于关联关系维度的数字资源聚合是数字资源知识发现的重要基础和工具。超网络是由多个类型的同质和异质子网络组成的网络，通过多种关联维度聚合的数字资源即形成了拥有相同以及不同性质的结点和关系的数字资源超网络，这些不同性质的关联与链接是知识关联、挖掘、发现与创新的脉络线索。结合超网络理论，构建和描述数字资源超网络，并分析超网络中不同性质的关系类型，如引用关系、共现关系、耦合关系等，从关联维度探讨数字资源深度聚合的模式，进而分析利用数字资源超网络进行知识发现的具体应用方法，最后构建数字资源超网络聚合系统模型。\",\"content_source_url\":\"http://d.g.wanfangdata.com.cn/Periodical_qbxb201501002.aspx\",\"digest\":\"测试\",\"show_cover_pic\":1,\"thumb_media_id\":\"BW4eDIdYSvO7AFjfsZKsQ9ujNma_TkCj3VSo3JNTQkYmk_iPuhpUKm48oZ4umHED\",\"title\":\"超网络视域下的数字资源深度聚合研究\"}]}";  
+        
+        JSONObject jsonObj = HttpUtil.httpRequest(apiUrl, "POST", data1);
+        PrintWriter out = resp.getWriter();
+		out.print(jsonObj.toString()); 
+	}
+	
+	@RequestMapping(value="/sendMSG",method=RequestMethod.GET)
+	protected void  sendMSG(HttpServletRequest req,HttpServletResponse resp)
+			throws ServletException, IOException{
+		 	String urlstr ="https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN"; //发送客服图文消息
+	        urlstr =urlstr.replace("ACCESS_TOKEN", TokenThread.accessToken.getToken());
+	        String reqjson =createGroupText();
+	        try {
+	            URL httpclient =new URL(urlstr);
+	            HttpURLConnection conn =(HttpURLConnection) httpclient.openConnection();
+	            conn.setConnectTimeout(5000);
+	            conn.setReadTimeout(2000);
+	            conn.setRequestMethod("POST");
+	            conn.setRequestProperty("Content-Type","application/x-www-form-urlencoded");    
+	            conn.setDoOutput(true);        
+	            conn.setDoInput(true);
+	            conn.connect();
+	            OutputStream os= conn.getOutputStream();    
+	            System.out.println("ccccc:"+reqjson);
+	            os.write(reqjson.getBytes("UTF-8"));//传入参数    
+	            os.flush();
+	            os.close();
+	             
+	            InputStream is =conn.getInputStream();
+	            int size =is.available();
+	            byte[] jsonBytes =new byte[size];
+	            is.read(jsonBytes);
+	            String message=new String(jsonBytes,"UTF-8");
+	            System.out.println("test send Text By Openids:"+message);
+	          
+	        } catch (MalformedURLException e) {
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        } 
+	}
+	    
+    //创建发送的数据
+    private String createGroupText(){
+    	 JSONArray array = new JSONArray();
+         JSONObject gjson =new JSONObject();
+         //JSONObject json = getUserOpenids(array.get(3).toString()); //array参数是用户组所有的用户,该方法打印array其中一个用户的详细信息
+         gjson.put("touser", "o7tZLuBYucdwt3j45_p41xIsMTQ0");
+         gjson.put("msgtype", "news");
+         JSONObject news =new JSONObject();
+         JSONArray articles =new JSONArray();
+         JSONObject list =new JSONObject();
+         list.put("title","标准的测试标题"); //标题
+         list.put("description","测试一把"); //描述
+         list.put("url","http://www.baidu.com"); //点击图文链接跳转的地址
+         list.put("picurl","http://"); //图文链接的图片
+         articles.add(list);
+         news.put("articles", articles);
+         JSONObject text =new JSONObject();
+         gjson.put("text", text);
+         gjson.put("news", news);
+          
+        return gjson.toString();
+    }
+}		

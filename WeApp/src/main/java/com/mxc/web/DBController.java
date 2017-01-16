@@ -58,6 +58,37 @@ public class DBController {
 		}
 		out.print(arr.toString()); 
 		//resp.sendRedirect("user_table.jsp");
+		return new ModelAndView("user_table","para",arr.toString());
+	}
+	
+	/*
+	 * 测试数据库连接
+	 * */
+	@RequestMapping(value="/addMsg")
+	@ResponseBody
+	public ModelAndView  addMsg(HttpServletRequest resq,HttpServletResponse resp) throws Exception{
+		String sex = resq.getParameter("sex");
+		String age = resq.getParameter("age");
+		Map paramMap = new HashMap();
+		paramMap.put("sex", sex);
+		paramMap.put("age", age);
+		List<User> users = this.userService.selectById(paramMap);
+		JsonArray arr = new JsonArray();
+		for(int i =0;i<users.size();i++){
+			JsonObject json = new JsonObject();
+			System.out.println(users.get(i).getUser());
+			json.addProperty("user", users.get(i).getUser());
+			json.addProperty("password", users.get(i).getPassword());
+			arr.add(json);
+		}
+		PrintWriter out = null;
+		try {
+			out = resp.getWriter();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		out.print(arr.toString()); 
+		//resp.sendRedirect("user_table.jsp");
 		 return new ModelAndView("user_table","para",arr.toString());
 	}
 }

@@ -2,11 +2,7 @@ package com.weixin.util;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;  
 
-/** 
- *  
- * @author morning 
- * @date 2015年2月16日 下午2:29:32 
- */  
+
 @XStreamAlias("xml")  
 public class OutputMessage {  
   

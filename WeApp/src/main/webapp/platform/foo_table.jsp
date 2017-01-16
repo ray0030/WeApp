@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page language="java" pageEncoding="utf-8" contentType="text/html; charset=utf-8" %>
 <!DOCTYPE html>
 <html>
 
@@ -23,120 +25,100 @@
 <body class="gray-bg">
     <div class="wrapper wrapper-content animated fadeInRight">
 
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>FooTable行切换，排序，分页演示</h5>
-
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-wrench"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#">选项 01</a>
-                                    </li>
-                                    <li><a href="#">选项 02</a>
-                                    </li>
-                                </ul>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="ibox-content" id="tablePos">
-
-                           
-
-                        </div>
+                                                       
+                        <!--  -->
+                        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>带验证的表单向导</h5>
                     </div>
+                    <div class="ibox-content">
+                        <form id="form" action="<c:url value='/platform/showAll'/>" method="post" class="wizard-big">
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <!-- <label>姓名 *</label>
+                                            <input id="name" name="name" type="text" class="form-control required"> -->
+                                            <label class="col-sm-5 control-label">地区：</label>
+					        				<div class="col-sm-12">
+					            				<select class="form-control" name="area"></select>
+					        				</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">组织：</label>
+					        				<div class="col-sm-12">
+					            				<select class="form-control" name="org"></select>
+					        				</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">年龄：</label>
+					        				<div class="col-sm-12">
+					            				<select class="form-control" id="age" name="age" onchange="checkField(this.value)"></select>
+					        				</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label">性别：</label>
+					        				<div class="col-sm-12">
+					            				<select class="form-control" id="sex" name="sex" onchange="checkField(this.value)"></select>
+					        				</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                       				<button class="btn btn-sm btn-primary center-block m-t-n-xs"  type="submit"><strong>查  询</strong>
+                        			</button>
+                                </div>
+                            </fieldset>
+                        </form>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>FooTable分页、排序、过滤演示</h5>
-
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-wrench"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#">选项 01</a>
-                                    </li>
-                                    <li><a href="#">选项 02</a>
-                                    </li>
-                                </ul>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="ibox-content">
-                            <input type="text" class="form-control input-sm m-b-xs" id="filter"
-                                   placeholder="搜索表格...">
-
-                            <table class="footable table table-stripped" data-page-size="8" data-filter=#filter>
-                                <thead>
-                                        <tr>
-                                            <th>渲染引擎</th>
-                                            <th>浏览器</th>
-                                            <th>平台</th>
-                                            <th>引擎版本</th>
-                                            <th>CSS等级</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="gradeX">
-                                            <td>Trident</td>
-                                            <td>Internet Explorer 4.0
-                                            </td>
-                                            <td>Win 95+</td>
-                                            <td class="center">4</td>
-                                            <td class="center">X</td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td colspan="5">
-                                                <ul class="pagination pull-right"></ul>
-                                            </td>
-                                        </tr>
-                                    </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+		  </div>
         </div>
     <!-- 全局js -->
     <script src="js/jquery.min.js?v=2.1.4"></script>
     <script src="js/bootstrap.min.js?v=3.3.6"></script>
     <script src="js/plugins/footable/footable.all.min.js"></script>
-
+	<script src="js/tool.js"></script> 	
     <!-- 自定义js -->
     <script src="js/content.js?v=1.0.0"></script>
     <script>
         $(document).ready(function() {
+        	//jsonAjax("<c:url value='/platform/showAll'/>","id=1&name=2","json",refresh);
+        	//
+        	var sexSelect = document.getElementById("sex");
+        	var opp1 = new Option("aaa","男");
+        	sexSelect.add(opp1);
+        	var opp2 = new Option("aaa2","女");
+        	sexSelect.add(opp2);
+        	
+        	var ageSelect = document.getElementById("age");
+        	var opp3 = new Option("aaa","21");
+        	ageSelect.add(opp3);
+        	var opp4 = new Option("aaa2","22");
+        	ageSelect.add(opp4);
+        });
+        function refresh(data){
         	var tableStr = "<table class=\"footable table table-stripped toggle-arrow-tiny\" data-page-size=\"8\">";
         	tableStr = tableStr + "<thead><tr><th>产品</th><th>名字</th><th>电话</th><th>操作</th></tr></thead><tbody>";
-        	tableStr = tableStr +"<tr><td>2015韩国童装韩版牛仔童短裤</td><td>袁岳</td><td>0800 051213</td><td><a href=\"#\"><i class=\"fa fa-check text-navy\"></i> 通过</a></td></tr>";
+        	for(var i =0; i<data.length ; i++){
+        		tableStr = tableStr +"<tr><td>2015韩国童装韩版牛仔童短裤</td><td>"+data[i].user+"</td><td>"+data[i].password+"</td><td><a href=\"#\"><i class=\"fa fa-check text-navy\"></i> 通过</a></td></tr>";
+        	}
+        	//tableStr = tableStr +"<tr><td>2015韩国童装韩版牛仔童短裤</td><td>袁岳</td><td>0800 051213</td><td><a href=\"#\"><i class=\"fa fa-check text-navy\"></i> 通过</a></td></tr>";
         	
         	tableStr = tableStr + "</tbody><tfoot><tr><td colspan=\"5\"><ul class=\"pagination pull-right\"></ul></td></tr></tfoot></table>";
-        	 $("#tablePos").html(tableStr);  
+        	$("#tablePos").html(tableStr);  
             $('.footable').footable();
-            $('.footable2').footable();
-           
             
-        });
+        }
 
+        function checkField(data){
+        	alert(data);
+        }
+        
     </script>
 
     <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>

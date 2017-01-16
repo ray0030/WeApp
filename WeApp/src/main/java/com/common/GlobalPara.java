@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.util.Properties;
 
 public class GlobalPara {
+	public static String token_url;
 	public static String grant_type;
 	public static String appid;
 	public static String secret;
@@ -39,6 +40,7 @@ public class GlobalPara {
 		}
 
 		// 赋值
+		token_url = ps.getProperty("token_url");
 		grant_type = ps.getProperty("grant_type");
 		appid = ps.getProperty("appid");
 		secret = ps.getProperty("secret");

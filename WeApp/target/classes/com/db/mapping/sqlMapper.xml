@@ -2,16 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.db.dao.UserDao">
 
-	<resultMap id="BaseResultMap" type="java.util.HashMap">
+	<resultMap id="BaseResultMap" type="com.db.pojo.User">
 		<id column="dic_id" property="dicId" jdbcType="VARCHAR" />
 		<result column="user" property="user" jdbcType="VARCHAR" />
+		<result column="authentication_string" property="password" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	
 	<!-- 根据ID查询 -->
-	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
-		select user
-		from user
+	<select id="selectById" resultMap="BaseResultMap">
+		select user,authentication_string
+		from mytable
+		<where>
+			<if test="sex!=null and sex!='' ">
+				sex=#{sex}	
+			</if>
+			<if test="age!=null and age!='' ">
+				and age=#{age}	
+			</if>
+		</where>
+		 
 	</select>
 	
 	

@@ -24,7 +24,7 @@ import com.auto.util.TulingApiProcess;
 import com.common.GlobalPara;
 import com.google.gson.JsonObject;
 import com.thoughtworks.xstream.XStream;
-import com.util.WeiXinCheckUtil;
+import com.util.WeiXinUtil;
 import com.weixin.util.ImageMessage;
 import com.weixin.util.InputMessage;
 import com.weixin.util.OutputMessage;
@@ -56,7 +56,7 @@ public class DYHWeixin {
 			String nonce = req.getParameter("nonce");
 			String echoStr = req.getParameter("echostr"); 
 			PrintWriter out = resp.getWriter();
-			if(WeiXinCheckUtil.checkSignature(signature, timestamp, nonce)){  //校验认证
+			if(WeiXinUtil.checkSignature(signature, timestamp, nonce)){  //校验认证
 				out.print(echoStr); 
 			}else{
 	       

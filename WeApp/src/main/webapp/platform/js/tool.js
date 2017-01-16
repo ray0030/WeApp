@@ -8,12 +8,12 @@
      */  
      function jsonAjax(url, param, datat, callback) {  
          $.ajax({  
-             type: "post",  
+             type: "get",  
              url: url,  
              data: param,  
              dataType: datat,  
              success: callback,  
-             error: function () {  
+             error: function (XMLHttpRequest, textStatus, errorThrown) {  
                  jQuery.fn.mBox({  
                      message: '恢复失败'  
                  });  
