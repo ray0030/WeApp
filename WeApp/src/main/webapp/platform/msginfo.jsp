@@ -34,8 +34,6 @@
                 		<div class="ibox-content">
                         	<table class="footable table table-stripped" data-page-size="8" id="tablePos" data-filter=#filter>   
                         	</table>
-	                        	<button class="btn btn-primary"  onclick="location.href='javascript:history.go(-1);'"><strong>返 回</strong>
-	                        	</button>
                         </div>
                     </div>
                </div>
@@ -52,13 +50,13 @@
     <script src="js/content.js?v=1.0.0"></script>
     <script>
         $(document).ready(function() {
-        	var test =${para};
-        	refresh(test);
+        	jsonAjax("<c:url value='/platform/showMsg'/>","","json",refresh);
+        	refresh(data);
         });
         function refresh(data){
         	
         	var tableStr = "<table class=\"footable table table-stripped toggle-arrow-tiny\" data-page-size=\"8\">";
-        	tableStr = tableStr + "<thead><tr><th>产品</th><th>名字</th><th>电话</th><th>操作</th></tr></thead><tbody>";
+        	tableStr = tableStr + "<thead><tr><th>标题</th><th>描述</th><th>图片url</th><th>正文url</th></tr></thead><tbody>";
         	for(var i =0; i<data.length ; i++){
         		tableStr = tableStr +"<tr><td>2015韩国童装韩版牛仔童短裤</td><td>"+data[i].user+"</td><td>"+data[i].password+"</td><td><a href=\"#\"><i class=\"fa fa-check text-navy\"></i> 通过</a></td></tr>";
         	}        	
@@ -68,13 +66,6 @@
             
         }
 
-        function checkField(data){
-        	alert(data);
-        }
-        
-        function test(){
-        	jsonAjax("<c:url value='/platform/showAll'/>","id=1&name=2","json",refresh);
-        }
     </script>
 
     <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
