@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.db.dao.MsgDao">
+
+	
+	<resultMap id="TypeResultMap" type="com.db.pojo.Msg">
+		<id column="dic_id" property="dicId" jdbcType="VARCHAR" />
+		<result column="id"  property="id" jdbcType="VARCHAR" />
+		<result column="title"  property="title" jdbcType="VARCHAR" />
+		<result column="description"  property="desc" jdbcType="VARCHAR" />
+		<result column="picUrl"  property="picUrl" jdbcType="VARCHAR" />
+		<result column="url"  property="url" jdbcType="VARCHAR" />
+		<result column="newsType" property="type" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 根据ID查询 -->
+	<insert id="insertMsg" parameterType="java.util.HashMap">
+		insert into wxnewtable(title,description,picUrl,url,newsType)
+		values(#{title},#{desc},#{picUrl},#{url},#{type})
+		 
+	</insert>
+	
+	<select id="selectTypeList" resultMap="TypeResultMap">
+			SELECT DISTINCT newsType FROM wxnewtable
+	</select>
+	
+	
+	<select id="selectMsg" resultMap="TypeResultMap">
+			SELECT DISTINCT * FROM wxnewtable
+	</select>
+	
+	
+	<delete id="deleteMsg" parameterType="java.util.HashMap">
+		delete from wxnewtable where title=#{title} and description=#{desc} and picUrl=#{picUrl} and url=#{url} and newsType=#{type}
+	</delete>
+	
+	
+	<select id="selectMsgByUserType" parameterType="java.util.HashMap" resultMap="TypeResultMap">
+		select id,title,description,picUrl,url 
+		from wxnewtable
+		where newsType =(select msgType from mytable where userid=#{userid})
+	</select>
+	
+</mapper>
