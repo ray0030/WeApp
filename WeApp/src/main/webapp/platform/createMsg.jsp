@@ -24,9 +24,7 @@
 
 <body class="gray-bg">
     <div class="wrapper wrapper-content animated fadeInRight">
-                        <%-- <form id="form" action="<c:url value='/platform/showAll'/>" method="post" class="wizard-big"> --%>
-                       
-               <div class="row">
+             <div class="row">
 	            <div class="col-sm-12">
 	                <div class="ibox float-e-margins">
 	                    <div class="ibox-title">
@@ -50,19 +48,19 @@
 	                        </div>
 	                    </div>
 	                    <div class="ibox-content">
-	                        <form method="get" class="form-horizontal" action="<c:url value='/platform/addMsg'/>" method="post">
+	                        <form  class="form-horizontal" action="<c:url value='/platform/addMsg'/>" method="post">
 	                            <div class="form-group">
 	                                <label class="col-sm-2 control-label">图文消息标题</label>
 	
 	                                <div class="col-sm-10">
-	                                    <input type="text" class="form-control" id="title" name="title"><span class="help-block m-b-none">图文消息标题显示内容</span>
+	                                    <input type="text"  required="required" class="form-control" id="title" name="title"><span class="help-block m-b-none">图文消息标题显示内容</span>
 	                                </div>
 	                            </div>
 	                            <div class="hr-line-dashed"></div>
 	                            <div class="form-group">
 	                                <label class="col-sm-2 control-label">图文消息描述</label>
 	                                <div class="col-sm-10">
-	                                    <input type="text" class="form-control" id="description" name="description"> <span class="help-block m-b-none">图文消息描述显示内容</span>
+	                                    <input type="text"  required="required" class="form-control" id="description" name="description"> <span class="help-block m-b-none">图文消息描述显示内容</span>
 	                                </div>
 	                            </div>
 	                            <div class="hr-line-dashed"></div>
@@ -70,14 +68,14 @@
 	                                <label class="col-sm-2 control-label">图片链接</label>
 	
 	                                <div class="col-sm-10">
-	                                    <input type="password" class="form-control"   id="picUrl" name="picUrl" >
+	                                    <input class="form-control"   id="picUrl" name="picUrl" >
 	                                </div>
 	                            </div>
 	                            <div class="hr-line-dashed"></div>
 	                            <div class="form-group">
 	                                <label class="col-sm-2 control-label">正文链接</label>
 	                                <div class="col-sm-10">
-	                                    <input type="text" placeholder="正文链接" id="url" name="url"  class="form-control">
+	                                    <input type="text" required="required" placeholder="正文链接" id="url" name="url"  class="form-control">
 	                                </div>
 	                            </div>
 	                            <div class="hr-line-dashed"></div>
@@ -95,7 +93,7 @@
 	                            <div class="hr-line-dashed"></div>
 	                            <div class="form-group">
 	                                <div class="col-sm-4 col-sm-offset-2">
-	                                    <button class="btn btn-primary" type="submit">保存内容</button>
+	                                    <button class="btn btn-primary" type="submit">提交</button>
 	                                    <button class="btn btn-white" type="submit">取消</button>
 	                                </div>
 	                            </div>

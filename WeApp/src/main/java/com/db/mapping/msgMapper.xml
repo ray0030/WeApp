@@ -41,4 +41,10 @@
 		where newsType =(select msgType from mytable where userid=#{userid})
 	</select>
 	
+	<insert id="insertMsgLog" parameterType="java.util.HashMap">
+		insert into msglog(id,date,userid,wxid)
+		values(#{id},NOW(),#{userid},#{wxid})
+		 
+	</insert>
+	
 </mapper>

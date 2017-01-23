@@ -24,10 +24,56 @@
 
 <body class="gray-bg">
     <div class="wrapper wrapper-content animated fadeInRight">
-
-                                                       
-                        <!--  -->
-                        <div class="row">
+			<div class="row">
+	            <div class="col-sm-12">
+	                <div class="ibox float-e-margins">
+	                	<div class="ibox-title">
+	                        <h5>用户过滤</h5>
+	                    </div>
+	                    <div class="ibox-content">
+	                        <form  class="form-horizontal" action="<c:url value='/platform/showAll'/>" method="post">
+	                            <div class="form-group">
+                                            <label  class="col-sm-2 control-label">地区：</label>
+					        				<div class="col-sm-8">
+					            				<select class="form-control" name="area"></select>
+					        				</div>
+					        				
+                                </div>
+	                            <div class="hr-line-dashed"></div>
+	                            <div class="form-group">
+                                           <label class="col-sm-2 control-label">组织：</label>
+					        				<div class="col-sm-8">
+					            				<select class="form-control" name="org"></select>
+					        				</div>
+                                </div>
+	                            <div class="hr-line-dashed"></div>
+	                            <div class="form-group">
+                                            <label class="col-sm-2 control-label">年龄：</label>
+					        				<div class="col-sm-8">
+					            				<select class="form-control" id="age" name="age" onchange="checkField(this.value)"></select>
+					        				</div>
+                                </div>
+	                            <div class="hr-line-dashed"></div>
+	                            <div class="form-group">
+                                            <label class="col-sm-2 control-label">性别：</label>
+					        				<div class="col-sm-8">
+					            				<select class="form-control" id="sex" name="sex" onchange="checkField(this.value)"></select>
+					        				</div>
+                                </div>
+	                            <div class="hr-line-dashed"></div>
+	                            <div class="form-group">
+	                                <div class="col-sm-4 col-sm-offset-2">
+	                                    <button class="btn btn-primary"  type="submit"><strong>查  询</strong>
+                        				</button>
+	                                </div>
+	                            </div>
+	                        </form>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+       <%-- 
+          <div class="row">
             <div class="col-sm-12">
                 <div class="ibox">
                     <div class="ibox-title">
@@ -76,7 +122,7 @@
                         </form>
                 </div>
             </div>
-		  </div>
+		  </div> --%>
         </div>
     <!-- 全局js -->
     <script src="js/jquery.min.js?v=2.1.4"></script>

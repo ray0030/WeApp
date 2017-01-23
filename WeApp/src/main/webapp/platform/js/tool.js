@@ -6,12 +6,13 @@
      * @param callback回调函数  
      * @return  
      */  
-     function jsonAjax(url, param, datat, callback) {  
+     function jsonAjax(url, param, data, callback) {  
          $.ajax({  
-             type: "get",  
+             type: "post",  
              url: url,  
              data: param,  
-             dataType: datat,  
+             contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+             dataType: data,  
              success: callback,  
              error: function (XMLHttpRequest, textStatus, errorThrown) {  
                  jQuery.fn.mBox({  

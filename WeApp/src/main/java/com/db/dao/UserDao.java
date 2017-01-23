@@ -8,6 +8,6 @@ import com.db.pojo.User;
 
 public interface UserDao {
 	public User selectById1();
-	public List<User> selectById(Map paramMap);
+	public List<User> selectById(Map<String,String> paramMap);
 
 }

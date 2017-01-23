@@ -68,7 +68,10 @@
                         <a class="J_menuItem" href="foo_table.jsp"><i class="fa fa-columns"></i> <span class="nav-label">用户预览</span></a>
                     </li>
                     <li>
-                        <a class="J_menuItem" href="createMsg.jsp"><i class="fa fa-columns"></i> <span class="nav-label">新建信息类型</span></a>
+                        <a class="J_menuItem" href="msginfo.jsp"><i class="fa fa-bars"></i> <span class="nav-label">信息详情</span></a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="createMsg.jsp"><i class="fa fa-envelope"></i> <span class="nav-label">新建信息类型</span></a>
                     </li>
                 </ul>
             </div>

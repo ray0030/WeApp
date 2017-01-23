@@ -12,6 +12,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -43,6 +46,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.auto.util.TulingApiProcess;
 import com.common.GlobalPara;
 import com.google.gson.JsonObject;
+import com.service.MsgService;
 import com.thoughtworks.xstream.XStream;
 import com.util.TokenThread;
 import com.util.WeiXinUtil;
@@ -52,6 +56,7 @@ import com.weixin.util.ImageMessage;
 import com.weixin.util.InputMessage;
 import com.weixin.util.OutputMessage;
 import com.weixin.util.SerializeXmlUtil;
+import com.db.pojo.Msg;
 
 
 @Controller
@@ -63,6 +68,10 @@ public class FWHWeiXin {
 	private static final long serialVersionUID = 1L;
 		
 	private static Logger  log = LoggerFactory.getLogger(FWHWeiXin.class);
+	
+	
+	@Autowired
+	private MsgService msgService;
 	
 	public FWHWeiXin() {
 
@@ -191,6 +200,16 @@ public class FWHWeiXin {
 	            System.out.println("消息内容：" + inputMsg.getContent());  
 	            System.out.println("消息Id：" + inputMsg.getMsgId());  
 	            
+	            //test根据用户类型查询短信类型
+	            Map<String,String> paramM = new HashMap<String,String>();
+	            paramM.put("userid", custermname);
+	            List<Msg> msgL = this.msgService.selectMsgByUserType(paramM);
+	            //end
+	            String id = msgL.get(0).getId();
+	            String title = msgL.get(0).getTitle();
+	            String desc = msgL.get(0).getDescription();
+	            String picUrl = msgL.get(0).getPicUrl();
+	            String url = msgL.get(0).getUrl();
 	            StringBuffer str = new StringBuffer();  
 	            str.append("<xml>");  
 	            str.append("<ToUserName><![CDATA[" + custermname + "]]></ToUserName>");  
@@ -200,22 +219,31 @@ public class FWHWeiXin {
 	            str.append("<ArticleCount>2</ArticleCount>");  
 	            str.append("<Articles>"); 
 	            str.append("<item>"); 
-	            str.append("<Title><![CDATA[title1]]></Title>");
-	            str.append("<Description><![CDATA[我的测试账号1]]></Description>");
-	            str.append("<PicUrl><![CDATA[http://asset.yingmi.cn/managers/img/default.jpg]]></PicUrl>");
-	            str.append("<Url><![CDATA[http://www.baidu.com/]]></Url>");
+	            str.append("<Title><![CDATA["+title+"]]></Title>");
+	            str.append("<Description><![CDATA["+desc+"]]></Description>");
+	            str.append("<PicUrl><![CDATA["+picUrl+"]]></PicUrl>");
+	            str.append("<Url><![CDATA["+url+"]]></Url>");
 	            str.append("</item>"); 
 	            str.append("<item>"); 
-	            str.append("<Title><![CDATA[title2]]></Title>");
-	            str.append("<Description><![CDATA[我的测试账号2]]></Description>");
-	            str.append("<PicUrl><![CDATA[http://asset.yingmi.cn/managers/img/default.jpg]]></PicUrl>");
-	            str.append("<Url><![CDATA[http://www.sina.com.cn/]]></Url>");
+	            str.append("<Title><![CDATA["+title+"2]]></Title>");
+	            str.append("<Description><![CDATA["+desc+"2]]></Description>");
+	            str.append("<PicUrl><![CDATA["+picUrl+"]]></PicUrl>");
+	            str.append("<Url><![CDATA["+url+"]]></Url>");
 	            str.append("</item>");
 	            str.append("</Articles>");
 	            str.append("</xml>");  
 	            System.out.println(str.toString());  
 	            response.getWriter().write(str.toString());
 	            response.getWriter().write(new String(str.toString().getBytes("UTF-8"),"utf-8"));
+	            
+	            //insert log (send msg) 
+	            Map<String,String> paramM1 = new HashMap<String,String>();
+	            paramM1.put("id", id);
+	            paramM1.put("userid", custermname);
+	            paramM1.put("wxid", servername);
+	            this.msgService.insertMsgLog(paramM1);
+	            
+	            //end
 	        }
 	        //test end
 	       /* // 根据消息类型获取对应的消息内容  

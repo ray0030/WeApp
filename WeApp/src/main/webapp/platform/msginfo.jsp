@@ -51,21 +51,59 @@
     <script>
         $(document).ready(function() {
         	jsonAjax("<c:url value='/platform/showMsg'/>","","json",refresh);
-        	refresh(data);
         });
         function refresh(data){
-        	
         	var tableStr = "<table class=\"footable table table-stripped toggle-arrow-tiny\" data-page-size=\"8\">";
-        	tableStr = tableStr + "<thead><tr><th>标题</th><th>描述</th><th>图片url</th><th>正文url</th></tr></thead><tbody>";
+        	tableStr = tableStr + "<thead><tr><th>标题</th><th>描述</th><th>图片url</th><th>正文url</th><th>短信类型</th></tr></thead><tbody>";
         	for(var i =0; i<data.length ; i++){
-        		tableStr = tableStr +"<tr><td>2015韩国童装韩版牛仔童短裤</td><td>"+data[i].user+"</td><td>"+data[i].password+"</td><td><a href=\"#\"><i class=\"fa fa-check text-navy\"></i> 通过</a></td></tr>";
+        		tableStr = tableStr 
+        					+"<tr><td>"+data[i].title
+        					+"</td><td>"+data[i].desc
+        					+"</td><td>"+data[i].picUrl
+        					+"</td><td>"+data[i].url
+        					+"</td><td>"+data[i].type
+        					+"</td><td><a href=\"#\" onclick=\"test(this);\"><i class=\"fa fa-close text-navy\"></i> 删除</a></td></tr>";
         	}        	
-        	tableStr = tableStr + "</tbody><tfoot><tr><td colspan=\"5\"><ul class=\"pagination pull-right\"></ul></td></tr></tfoot></table>";
+        	tableStr = tableStr + "</tbody><tfoot><tr><td colspan=\"8\"><ul class=\"pagination pull-right\"></ul></td></tr></tfoot></table>";
         	$("#tablePos").html(tableStr);  
             $('.footable').footable();
             
         }
-
+        function test(obj){
+        	/* alert($(obj).closest('tr').find('td')[0].innerText);
+        	alert($(obj).closest('tr').find('td')[1].innerText);
+        	alert($(obj).closest('tr').find('td')[2].innerText);
+        	alert($(obj).closest('tr').find('td')[3].innerText); */
+        	parent.layer.confirm('是否确定删除该信息内容？', {
+        	    btn: ['是','否'], //按钮
+        	    shade: false //不显示遮罩
+        	}, function(){
+        		del(obj);
+        	}, function(){
+        	    parent.layer.msg('取消删除', {icon: 2,
+        	    								shade: [0.3, '#393D49'],
+												success: function(layero, index) {
+													window.location.reload();
+												}});
+        	});
+        }
+		function del(obj){
+        	var param = {
+        			title:$(obj).closest('tr').find('td')[0].innerText,
+        			desc:$(obj).closest('tr').find('td')[1].innerText,
+        			picUrl:$(obj).closest('tr').find('td')[2].innerText,
+        			url:$(obj).closest('tr').find('td')[3].innerText,
+        			type:$(obj).closest('tr').find('td')[4].innerText
+        		};
+        	jsonAjax("<c:url value='/platform/delMsg'/>",param,"json",succDel);
+		}
+		function succDel(){
+			parent.layer.msg('删除成功', {icon: 1,shade: [0.3, '#393D49'],
+											success: function(layero, index) {
+												window.location.reload();
+											}});
+			window.location.reload();
+		}
     </script>
 
     <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
