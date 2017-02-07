@@ -10,5 +10,7 @@
 		<result column="wxid"  property="wxid" jdbcType="VARCHAR" />
 	</resultMap>
 	
-	
+	<select id="qryMsgLog" resultMap="TypeResultMap">
+			SELECT DISTINCT newsType FROM wxnewtable
+	</select>
 </mapper>
