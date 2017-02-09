@@ -27,36 +27,28 @@
 	            <div class="col-sm-12">
 	                <div class="ibox float-e-margins">
 	                	<div class="ibox-title">
-	                        <h5>用户过滤</h5>
+	                        <h5>统计查询</h5>
 	                    </div>
 	                    <div class="ibox-content">
-	                        <form  class="form-horizontal" action="<c:url value='/platform/showAll'/>" method="post">
+	                        <form  class="form-horizontal" action="<c:url value='/platform/qryMsgLog'/>" method="post">
 	                            <div class="form-group">
-                                            <label  class="col-sm-2 control-label">地区：</label>
+                                            <label  class="col-sm-2 control-label">消息类别：</label>
 					        				<div class="col-sm-8">
-					            				<select class="form-control" name="area"></select>
-					        				</div>
-					        				
-                                </div>
-	                            <div class="hr-line-dashed"></div>
-	                            <div class="form-group">
-                                           <label class="col-sm-2 control-label">组织：</label>
-					        				<div class="col-sm-8">
-					            				<select class="form-control" name="org"></select>
+					            				<select class="form-control" name="msgType"></select>
 					        				</div>
                                 </div>
 	                            <div class="hr-line-dashed"></div>
 	                            <div class="form-group">
-                                            <label class="col-sm-2 control-label">年龄：</label>
+                                           <label class="col-sm-2 control-label">公众号：</label>
 					        				<div class="col-sm-8">
-					            				<select class="form-control" id="age" name="age" onchange="checkField(this.value)"></select>
+					            				<select class="form-control" name="wxGZH"></select>
 					        				</div>
                                 </div>
 	                            <div class="hr-line-dashed"></div>
 	                            <div class="form-group">
-                                            <label class="col-sm-2 control-label">性别：</label>
+                                            <label class="col-sm-2 control-label">时间段：</label>
 					        				<div class="col-sm-8">
-					            				<select class="form-control" id="sex" name="sex" onchange="checkField(this.value)"></select>
+					            				<select class="form-control" name="time"></select>
 					        				</div>
                                 </div>
 	                            <div class="hr-line-dashed"></div>
@@ -81,7 +73,7 @@
     <script src="js/content.js?v=1.0.0"></script>
     <script>
         $(document).ready(function() {
-
+			
         });
 
         
